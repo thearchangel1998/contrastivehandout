@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Analysis of Translation</title>
-    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -135,7 +133,6 @@
         </header>
 
         <main class="main-container">
-            <!-- Tab Navigation -->
             <nav class="flex flex-wrap md:flex-nowrap border-b border-slate-200">
                 <button data-tab="intro" class="tab-button active w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
@@ -150,7 +147,7 @@
                     The Translators
                 </button>
                 <button data-tab="analysis" class="tab-button w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                     Poem Analysis
                 </button>
                 <button data-tab="limitations" class="tab-button w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
@@ -163,87 +160,80 @@
                 </button>
             </nav>
 
-            <!-- Tab Content -->
             <div class="p-4 md:p-8">
-                <!-- Introduction Tab -->
                 <section id="intro" class="tab-content active">
                     <h2 class="text-2xl md:text-3xl mb-6">Introduction & Rationale</h2>
                     <div class="space-y-4 text-base md:text-lg leading-relaxed">
-                        <p>The field of translation has evolved beyond a simple exchange of words. It is now seen as a complex process involving <span class="highlight highlight-concept">culture</span>, <span class="highlight highlight-concept">communication</span>, and the <span class="highlight highlight-concept">human element</span>.</p>
+                        <p>The field of translation has evolved beyond a simple exchange of words. It is now seen as a complex process involving <span class="highlight highlight-concept">culture</span>, <span class="highlight highlight-concept">communication</span>, and the <span class="highlight highlight-concept">human element</span>. </p>
                         <p>While theories provide frameworks, a critical point is often understated: <strong class="text-slate-800">the translator plays a pivotal role in shaping the final text.</strong> Their work is influenced by personal experiences, education, and motivations.</p>
-                        <p>This study shows how a translator’s background affects their choices, proving they are active interpreters, not neutral conduits.</p>
+                        <p>This study shows how a translator’s background affects their choices, proving they are active interpreters, not neutral conduits. </p>
                     </div>
                 </section>
-                <!-- Theory Tab -->
                 <section id="theory" class="tab-content">
-                     <h2 class="text-2xl md:text-3xl mb-6">Nida's Theories of Equivalence</h2>
+                    <h2 class="text-2xl md:text-3xl mb-6">Nida's Theories of Equivalence</h2>
                      <div class="space-y-8 text-base md:text-lg">
                         <div class="p-6 border-l-4 border-teal-400 bg-teal-50 rounded-r-lg">
-                            <h3 class="text-xl md:text-2xl font-semibold mb-2">Formal Equivalence (FE)</h3>
-                            <p>This approach centers on the <span class="highlight highlight-fe">source text</span>, aiming for literal correspondence. It preserves original grammar, words, and cultural details, prioritizing <span class="highlight highlight-fe">fidelity to form</span> even if the result sounds less natural. </p>
+                            <h3 class="text-xl md:text-2xl font-semibold mb-2">Formal Equivalence (FE) </h3>
+                            <p>This approach centers on the <span class="highlight highlight-fe">source text</span>, aiming for literal correspondence.  It preserves original grammar, words, and cultural details, prioritizing <span class="highlight highlight-fe">fidelity to form</span> even if the result sounds less natural. </p>
                         </div>
                         <div class="p-6 border-l-4 border-cyan-400 bg-cyan-50 rounded-r-lg">
                             <h3 class="text-xl md:text-2xl font-semibold mb-2">Dynamic Equivalence (DE)</h3>
-                            <p>This approach focuses on the <span class="highlight highlight-de">target audience</span>, striving for an <span class="highlight highlight-de">"equivalent effect."</span> It prioritizes <span class="highlight highlight-de">naturalness</span> and adapts the message to create the same emotional and cognitive impact as the original.</p>
+                             <p>This approach focuses on the <span class="highlight highlight-de">target audience</span>, striving for an <span class="highlight highlight-de">"equivalent effect."</span> It prioritizes <span class="highlight highlight-de">naturalness</span> and adapts the message to create the same emotional and cognitive impact as the original. </p>
                         </div>
                     </div>
-                </section>
-                <!-- Translators Tab -->
+                 </section>
                 <section id="translators" class="tab-content">
                     <h2 class="text-2xl md:text-3xl mb-6">Meet the Translators</h2>
-                    <p class="text-center text-slate-500 mb-8 -mt-4">Click on a card to learn more about their approach.</p>
+                    <p class="text-center text-slate-500 mb-8 -mt-4">Click on a card to learn more about their approach. </p>
                     <div class="grid md:grid-cols-2 gap-8 text-base md:text-lg">
-                        <div class="flip-card-container h-64"><div class="flip-card"><div class="flip-card-front bg-slate-50 border border-slate-200 flex flex-col justify-center items-center"><h3 class="text-xl md:text-2xl font-semibold mb-3">Aileen Palmer</h3><p class="text-center text-cyan-600 font-semibold">The Activist Poet</p></div><div class="flip-card-back bg-cyan-500 text-white"><h4 class="font-bold text-lg mb-2">Favors Dynamic Equivalence</h4><p>Her life as an activist drove her to make messages <strong class="bg-cyan-400/50 px-1 rounded">accessible</strong> and <strong class="bg-cyan-400/50 px-1 rounded">impactful</strong> for a wider audience.</p></div></div></div>
+                        <div class="flip-card-container h-64"><div class="flip-card"><div class="flip-card-front bg-slate-50 border border-slate-200 flex flex-col justify-center items-center"><h3 class="text-xl md:text-2xl font-semibold mb-3">Aileen Palmer</h3><p class="text-center text-cyan-600 font-semibold">The Activist Poet</p></div><div class="flip-card-back bg-cyan-500 text-white"><h4 class="font-bold text-lg mb-2">Favors Dynamic Equivalence</h4><p>Her life as an activist drove her to make messages <strong class="bg-cyan-400/50 px-1 rounded">accessible</strong> and <strong class="bg-cyan-400/50 px-1 rounded">impactful</strong> for a wider audience. </p></div></div></div>
                         <div class="flip-card-container h-64"><div class="flip-card"><div class="flip-card-front bg-slate-50 border border-slate-200 flex flex-col justify-center items-center"><h3 class="text-xl md:text-2xl font-semibold mb-3">Huỳnh Sanh Thông</h3><p class="text-center text-teal-600 font-semibold">The Scholar</p></div><div class="flip-card-back bg-teal-500 text-white"><h4 class="font-bold text-lg mb-2">Favors Formal Equivalence</h4><p>His academic career was dedicated to the <strong class="bg-teal-400/50 px-1 rounded">preservation</strong> and <strong class="bg-teal-400/50 px-1 rounded">dissemination</strong> of literature with <strong class="bg-teal-400/50 px-1 rounded">linguistic fidelity</strong>.</p></div></div></div>
-                    </div>
+                     </div>
                 </section>
-                <!-- Analysis Tab -->
                 <section id="analysis" class="tab-content">
                     <h2 class="text-2xl md:text-3xl mb-6">Case Study: Poem Translations</h2>
                     <div class="border border-slate-200 rounded-xl p-4 md:p-6 mb-8">
                         <h3 class="text-xl md:text-2xl font-bold mb-4">Ngắm Trăng <span class="text-lg md:text-xl font-normal text-slate-500">(Moonlight)</span></h3>
                         <div class="space-y-2 text-base md:text-lg">
-                            <div><div class="flex items-center"><p class="clickable-line">Trong tù không rượu cũng không hoa,</p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "For prisoners, there is no alcohol nor flowers,"</span><button class="tts-button" data-lang="en-US" data-gender="female" data-text='For prisoners, there is no alcohol nor flowers,'><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">Her more generalized opening and use of "alcohol" show a focus on natural English phrasing and immediate resonance.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "In prison there's no alcohol nor flower,"</span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="In prison there's no alcohol nor flower,"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">His translation is very close to the literal meaning, reflecting a commitment to lexical fidelity and directness.</p></div></div></div>
-                            <div><div class="flex items-center"><p class="clickable-line">Trước cảnh đẹp đêm nay biết làm thế nào?</p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "But the night is so lovely, how can we celebrate it?"</span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="But the night is so lovely, how can we celebrate it?"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">She dramatically rephrases the line into a more poetic, emotionally charged question to inject a sense of longing.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "With what to celebrate this lovely night?"</span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="With what to celebrate this lovely night?"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">This is a direct and accurate translation, maintaining the original's nuance with slightly more formal phrasing.</p></div></div></div>
-                            <div><div class="flex items-center"><p class="clickable-line">Người hướng ra trước song ngắm trăng sáng,</p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "I go to the air-hole and stare up at the moon,"</span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="I go to the air-hole and stare up at the moon,"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">Specifying "I" and using the evocative "air-hole" prioritizes personal image and emotional impact.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "I go to the window and watch the moon,"</span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="I go to the window and watch the moon,"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">Using "window" and "watch" is a straightforward, literal choice, preferring simplicity over interpretive imagery.</p></div></div></div>
-                            <div><div class="flex items-center"><p class="clickable-line">Từ ngoài khe cửa, trăng ngắm nhà thơ.</p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "And through the air-hole the moon smiles at the poet."</span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="And through the air-hole the moon smiles at the poet."><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">"The moon smiles" is a highly emotional, anthropomorphic interpretation that creates a vivid and warm connection.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "The moon peers through the window at the poet."</span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="The moon peers through the window at the poet."><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">"The moon peers" is a precise and less anthropomorphic verb, maintaining a more observational tone.</p></div></div></div>
+                            <div><div class="flex items-center"><p class="clickable-line">Trong tù không rượu cũng không hoa, </p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "For prisoners, there is no alcohol nor flowers," </span><button class="tts-button" data-lang="en-US" data-gender="female" data-text='For prisoners, there is no alcohol nor flowers,'><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">Her more generalized opening and use of "alcohol" show a focus on natural English phrasing and immediate resonance.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "In prison there's no alcohol nor flower," </span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="In prison there's no alcohol nor flower,"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">His translation is very close to the literal meaning, reflecting a commitment to lexical fidelity and directness.</p></div></div></div>
+                            <div><div class="flex items-center"><p class="clickable-line">Trước cảnh đẹp đêm nay biết làm thế nào?</p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "But the night is so lovely, how can we celebrate it?" </span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="But the night is so lovely, how can we celebrate it?"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">She dramatically rephrases the line into a more poetic, emotionally charged question to inject a sense of longing.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "With what to celebrate this lovely night?" </span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="With what to celebrate this lovely night?"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">This is a direct and accurate translation, maintaining the original's nuance with slightly more formal phrasing.</p></div></div></div>
+                            <div><div class="flex items-center"><p class="clickable-line">Người hướng ra trước song ngắm trăng sáng,</p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "I go to the air-hole and stare up at the moon," </span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="I go to the air-hole and stare up at the moon,"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">Specifying "I" and using the evocative "air-hole" prioritizes personal image and emotional impact.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "I go to the window and watch the moon," </span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="I go to the window and watch the moon,"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">Using "window" and "watch" is a straightforward, literal choice, preferring simplicity over interpretive imagery.</p></div></div></div>
+                            <div><div class="flex items-center"><p class="clickable-line">Từ ngoài khe cửa, trăng ngắm nhà thơ.</p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "And through the air-hole the moon smiles at the poet." </span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="And through the air-hole the moon smiles at the poet."><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">"The moon smiles" is a highly emotional, anthropomorphic interpretation that creates a vivid and warm connection.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "The moon peers through the window at the poet." </span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="The moon peers through the window at the poet."><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">"The moon peers" is a precise and less anthropomorphic verb, maintaining a more observational tone.</p></div></div></div>
                         </div>
-                    </div>
+                     </div>
                     <div class="border border-slate-200 rounded-xl p-4 md:p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-4">Đi Đường <span class="text-lg md:text-xl font-normal text-slate-500">(On The Road)</span></h3>
                         <div class="space-y-2 text-base md:text-lg">
-                             <div><div class="flex items-center"><p class="clickable-line">Có đi đường mới biết đường đi khó,</p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "Only when out on the road can we take stock of our dangers,"</span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="Only when out on the road can we take stock of our dangers,"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">She expands the meaning to "take stock of our dangers" for a more impactful and relatable message.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "He knows the road is rough who walks the road."</span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="He knows the road is rough who walks the road."><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">He maintains a close structure to the original with formal English phrasing, demonstrating formal equivalence.</p></div></div></div>
-                            <div><div class="flex items-center"><p class="clickable-line">Hết lớp núi này lại tiếp đến lớp núi khác;</p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "After we climb one mountain, another looms into view:"</span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="After we climb one mountain, another looms into view:"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">"Looms into view" is a dynamic and poetic verb choice that conveys the daunting challenge.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "One mountain range, another mountain range . . ."</span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="One mountain range, another mountain range..."><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">The repetition and ellipsis maintain the cumulative feel of the original, mirroring its structure.</p></div></div></div>
-                            <div><div class="flex items-center"><p class="clickable-line">Khi đã vượt các lớp núi lên đến đỉnh cao chót,</p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "But, once we have struggled up to the top of the mountain range,"</span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="But, once we have struggled up to the top of the mountain range,"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">The use of "But" and "struggled up" emphasizes effort and enhances the emotional connection.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "Keep struggling up and reach the highest peak:"</span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="Keep struggling up and reach the highest peak:"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">"Keep struggling up" is a strong, accurate translation that maintains the sense of ongoing effort.</p></div></div></div>
-                            <div><div class="flex items-center"><p class="clickable-line">Thì muôn dặm nước non thu cả vào tầm mắt.</p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "More than ten thousand li can be surveyed at a glance."</span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="More than ten thousand li can be surveyed at a glance."><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">"Surveyed at a glance" powerfully conveys the visual scope and sense of achievement with natural English.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "ten thousand miles will come within your ken."</span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="ten thousand miles will come within your ken."><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">The use of the formal idiom "within your ken" highlights scholarly precision and lexical fidelity.</p></div></div></div>
+                            <div><div class="flex items-center"><p class="clickable-line">Có đi đường mới biết đường đi khó, </p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "Only when out on the road can we take stock of our dangers," </span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="Only when out on the road can we take stock of our dangers,"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">She expands the meaning to "take stock of our dangers" for a more impactful and relatable message.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "He knows the road is rough who walks the road." </span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="He knows the road is rough who walks the road."><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">He maintains a close structure to the original with formal English phrasing, demonstrating formal equivalence.</p></div></div></div>
+                            <div><div class="flex items-center"><p class="clickable-line">Hết lớp núi này lại tiếp đến lớp núi khác; </p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "After we climb one mountain, another looms into view:" </span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="After we climb one mountain, another looms into view:"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">"Looms into view" is a dynamic and poetic verb choice that conveys the daunting challenge.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "One mountain range, another mountain range . . ." </span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="One mountain range, another mountain range..."><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">The repetition and ellipsis maintain the cumulative feel of the original, mirroring its structure.</p></div></div></div>
+                            <div><div class="flex items-center"><p class="clickable-line">Khi đã vượt các lớp núi lên đến đỉnh cao chót,</p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "But, once we have struggled up to the top of the mountain range," </span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="But, once we have struggled up to the top of the mountain range,"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">The use of "But" and "struggled up" emphasizes effort and enhances the emotional connection.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "Keep struggling up and reach the highest peak:" </span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="Keep struggling up and reach the highest peak:"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">"Keep struggling up" is a strong, accurate translation that maintains the sense of ongoing effort.</p></div></div></div>
+                            <div><div class="flex items-center"><p class="clickable-line">Thì muôn dặm nước non thu cả vào tầm mắt. </p></div><div class="translations"><div class="p-2 mb-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-sky-700">A. Palmer:</strong> "More than ten thousand li can be surveyed at a glance." </span><button class="tts-button" data-lang="en-US" data-gender="female" data-text="More than ten thousand li can be surveyed at a glance."><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">"Surveyed at a glance" powerfully conveys the visual scope and sense of achievement with natural English.</p></div><div class="p-2"><p class="flex items-center justify-between"><span><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "ten thousand miles will come within your ken." </span><button class="tts-button" data-lang="en-US" data-gender="male" data-text="ten thousand miles will come within your ken."><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg></button></p><p class="analysis-text">The use of the formal idiom "within your ken" highlights scholarly precision and lexical fidelity.</p></div></div></div>
                         </div>
-                    </div>
+                     </div>
                 </section>
-                <!-- Limitations Tab -->
                 <section id="limitations" class="tab-content">
                     <h2 class="text-2xl md:text-3xl mb-6">Limitations of the Study</h2>
-                    <div class="space-y-4 text-base md:text-lg leading-relaxed">
+                     <div class="space-y-4 text-base md:text-lg leading-relaxed">
                         <ul class="list-disc list-inside space-y-4">
-                            <li><strong class="text-slate-800">Limited Scope:</strong> The analysis is based on only <span class="highlight highlight-concept">two poems</span> and <span class="highlight highlight-concept">two translators</span>. Findings may not be generalizable.</li>
-                            <li><strong class="text-slate-800">Qualitative Nature:</strong> Findings are <span class="highlight highlight-concept">interpretive and subjective</span>, based on close reading, not statistics.</li>
-                            <li><strong class="text-slate-800">Complexity of Background:</strong> A translator's background is multifaceted and this study cannot account for all <span class="highlight highlight-concept">subtle influences</span>.</li>
-                            <li><strong class="text-slate-800">Theoretical Focus:</strong> The analysis primarily uses <span class="highlight highlight-concept">Nida's theories</span>; other frameworks could offer different perspectives.</li>
+                            <li><strong class="text-slate-800">Limited Scope:</strong> The analysis is based on only <span class="highlight highlight-concept">two poems</span> and <span class="highlight highlight-concept">two translators</span>.  Findings may not be generalizable. </li>
+                            <li><strong class="text-slate-800">Qualitative Nature:</strong> Findings are <span class="highlight highlight-concept">interpretive and subjective</span>, based on close reading, not statistics. </li>
+                            <li><strong class="text-slate-800">Complexity of Background:</strong> A translator's background is multifaceted and this study cannot account for all <span class="highlight highlight-concept">subtle influences</span>. </li>
+                            <li><strong class="text-slate-800">Theoretical Focus:</strong> The analysis primarily uses <span class="highlight highlight-concept">Nida's theories</span>;  other frameworks could offer different perspectives. </li>
                         </ul>
                     </div>
                 </section>
-                <!-- Presenters Tab -->
                 <section id="presenters" class="tab-content">
                     <h2 class="text-2xl md:text-3xl mb-6">List of Presenters</h2>
                     <div class="text-base md:text-lg leading-relaxed">
                         <ol class="list-decimal list-inside space-y-1 bg-slate-50 p-6 rounded-lg">
-                            <li class="p-2 rounded-md">Ngô Thị Hà</li>
-                            <li class="p-2 rounded-md">Đỗ Thành Thái Hiền</li>
-                            <li class="p-2 rounded-md">Trịnh Kim Sơn</li>
-                            <li class="p-2 rounded-md">Nguyễn Thùy Trang</li>
-                            <li class="p-2 rounded-md">Đỗ Thị Kiều Hạnh</li>
-                            <li class="p-2 rounded-md">Đỗ Tuấn Nam</li>
+                            <li class="p-2 rounded-md">Ngô Thị Hà </li>
+                            <li class="p-2 rounded-md">Đỗ Thành Thái Hiền </li>
+                            <li class="p-2 rounded-md">Trịnh Kim Sơn </li>
+                            <li class="p-2 rounded-md">Nguyễn Thùy Trang </li>
+                            <li class="p-2 rounded-md">Đỗ Thị Kiều Hạnh </li>
+                            <li class="p-2 rounded-md">Đỗ Tuấn Nam </li>
                         </ol>
-                    </div>
+                     </div>
                 </section>
             </div>
         </main>
@@ -252,7 +242,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // --- Tab Navigation ---
-            const tabButtons = document.querySelectorAll('.tab-button');
+             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
@@ -262,7 +252,6 @@
                     document.getElementById(button.dataset.tab).classList.add('active');
                 });
             });
-
             // --- Accordion for Poem Translations ---
             const clickableLines = document.querySelectorAll('.clickable-line');
             clickableLines.forEach(line => {
@@ -271,7 +260,6 @@
                     this.parentElement.nextElementSibling.classList.toggle('show');
                 });
             });
-
             // --- Flip Cards for Translators ---
             const flipCards = document.querySelectorAll('.flip-card');
             flipCards.forEach(card => {
@@ -279,13 +267,11 @@
                     this.classList.toggle('is-flipped');
                 });
             });
-
             // --- Text-to-Speech (TTS) Functionality ---
             const synthesis = window.speechSynthesis;
             let voices = [];
             let currentUtterance = null;
             let speakingButton = null;
-
             function populateVoiceList() {
                 voices = synthesis.getVoices();
                 if (voices.length > 0) {
@@ -294,7 +280,6 @@
             }
             
             document.querySelectorAll('.tts-button').forEach(button => button.disabled = true);
-
             populateVoiceList();
             if (synthesis.onvoiceschanged !== undefined) {
                 synthesis.onvoiceschanged = populateVoiceList;
@@ -314,12 +299,12 @@
                     event.stopPropagation();
                     
                     const textToSpeak = this.dataset.text;
-                    const langAttr = this.dataset.lang;
+                     const langAttr = this.dataset.lang;
                     const genderAttr = this.dataset.gender;
 
                     if (speakingButton === this) {
                         stopSpeech();
-                        return;
+                         return;
                     }
                     
                     stopSpeech();
@@ -329,11 +314,11 @@
                         currentUtterance = new SpeechSynthesisUtterance(textToSpeak);
 
                         const langPrefix = langAttr.split('-')[0];
-                        let potentialVoices = voices.filter(v => v.lang.toLowerCase().startsWith(langPrefix));
+                         let potentialVoices = voices.filter(v => v.lang.toLowerCase().startsWith(langPrefix));
 
                         if (genderAttr && potentialVoices.length > 0) {
                             const genderedVoices = potentialVoices.filter(v => {
-                                const name = v.name.toLowerCase();
+                                 const name = v.name.toLowerCase();
                                 return genderAttr === 'female' ? name.includes('female') || name.includes('zira') || name.includes('susan') || name.includes('kathy') : name.includes('male') || name.includes('david') || name.includes('mark');
                             });
                              if (genderedVoices.length > 0) {
@@ -350,9 +335,8 @@
                             console.warn(`No specific voice found for lang: ${langAttr} and gender: ${genderAttr}. Using browser default.`);
                         }
 
-                        speakingButton = button; // Use 'button' from the outer scope
+                        speakingButton = button;
                         button.classList.add('is-speaking');
-
                         currentUtterance.onend = () => {
                             if (speakingButton) speakingButton.classList.remove('is-speaking');
                             speakingButton = null;
