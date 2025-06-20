@@ -30,12 +30,14 @@
         .tab-button {
             transition: all 0.3s ease;
             border-bottom: 3px solid transparent;
+            border-top: 3px solid transparent; /* Added for symmetry on mobile */
         }
         .tab-button.active {
             color: #0ea5e9; /* sky-500 */
             border-bottom-color: #0ea5e9;
+            background-color: #f8fafc; /* slate-50 */
         }
-        .tab-button:hover {
+        .tab-button:hover:not(.active) {
             background-color: #f8fafc; /* slate-50 */
         }
         .tab-content {
@@ -105,45 +107,45 @@
         }
     </style>
 </head>
-<body class="antialiased p-4 md:p-8">
+<body class="antialiased p-2 sm:p-4 md:p-8">
 
     <div class="container mx-auto max-w-5xl">
         <header class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-2">The Translator's Lens</h1>
-            <p class="text-xl text-slate-500">How Background Shapes Interpretation</p>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-2">The Translator's Lens</h1>
+            <p class="text-lg md:text-xl text-slate-500">How Background Shapes Interpretation</p>
         </header>
 
         <main class="main-container">
-            <!-- Tab Navigation -->
-            <nav class="flex border-b border-slate-200">
-                <button data-tab="intro" class="tab-button active flex-1 p-4 text-lg font-semibold flex items-center justify-center gap-2">
+            <!-- Tab Navigation - now responsive -->
+            <nav class="flex flex-wrap md:flex-nowrap border-b border-slate-200">
+                <button data-tab="intro" class="tab-button active w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     Introduction
                 </button>
-                <button data-tab="theory" class="tab-button flex-1 p-4 text-lg font-semibold flex items-center justify-center gap-2">
+                <button data-tab="theory" class="tab-button w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
                     The Theory
                 </button>
-                <button data-tab="translators" class="tab-button flex-1 p-4 text-lg font-semibold flex items-center justify-center gap-2">
+                <button data-tab="translators" class="tab-button w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                     The Translators
                 </button>
-                <button data-tab="analysis" class="tab-button flex-1 p-4 text-lg font-semibold flex items-center justify-center gap-2">
+                <button data-tab="analysis" class="tab-button w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                     Poem Analysis
                 </button>
-                <button data-tab="limitations" class="tab-button flex-1 p-4 text-lg font-semibold flex items-center justify-center gap-2">
+                <button data-tab="limitations" class="tab-button w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
                     Limitations
                 </button>
             </nav>
 
             <!-- Tab Content -->
-            <div class="p-6 md:p-10">
+            <div class="p-4 md:p-8">
                 <!-- Introduction Tab -->
                 <section id="intro" class="tab-content active">
-                    <h2 class="text-3xl mb-6">Introduction & Rationale</h2>
-                    <div class="space-y-4 text-lg leading-relaxed">
+                    <h2 class="text-2xl md:text-3xl mb-6">Introduction & Rationale</h2>
+                    <div class="space-y-4 text-base md:text-lg leading-relaxed">
                         <p>The field of translation has evolved beyond a simple exchange of words. It is now seen as a complex process involving <span class="highlight highlight-concept">culture</span>, <span class="highlight highlight-concept">communication</span>, and the <span class="highlight highlight-concept">human element</span>.</p>
                         <p>While theories provide frameworks, a critical point is often understated: <strong class="text-slate-800">the translator plays a pivotal role in shaping the final text.</strong> Their work is influenced by personal experiences, education, and motivations.</p>
                         <p>This study shows how a translator’s background affects their choices, proving they are active interpreters, not neutral conduits.</p>
@@ -151,39 +153,39 @@
                 </section>
                 <!-- Theory Tab -->
                 <section id="theory" class="tab-content">
-                     <h2 class="text-3xl mb-6">Nida's Theories of Equivalence</h2>
-                     <div class="space-y-6 text-lg">
+                     <h2 class="text-2xl md:text-3xl mb-6">Nida's Theories of Equivalence</h2>
+                     <div class="space-y-6 text-base md:text-lg">
                         <div>
-                            <h3 class="text-2xl font-semibold mb-2">Formal Equivalence (FE)</h3>
+                            <h3 class="text-xl md:text-2xl font-semibold mb-2">Formal Equivalence (FE)</h3>
                             <p>This approach centers on the <span class="highlight highlight-fe">source text</span>, aiming for literal correspondence. It preserves original grammar, words, and cultural details, prioritizing <span class="highlight highlight-fe">fidelity to form</span> even if the result sounds less natural. </p>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-semibold mb-2">Dynamic Equivalence (DE)</h3>
+                            <h3 class="text-xl md:text-2xl font-semibold mb-2">Dynamic Equivalence (DE)</h3>
                             <p>This approach focuses on the <span class="highlight highlight-de">target audience</span>, striving for an <span class="highlight highlight-de">"equivalent effect."</span> It prioritizes <span class="highlight highlight-de">naturalness</span> and adapts the message to create the same emotional and cognitive impact as the original.</p>
                         </div>
                     </div>
                 </section>
                 <!-- Translators Tab -->
                 <section id="translators" class="tab-content">
-                    <h2 class="text-3xl mb-6">Meet the Translators</h2>
-                    <div class="grid md:grid-cols-2 gap-8 text-lg">
+                    <h2 class="text-2xl md:text-3xl mb-6">Meet the Translators</h2>
+                    <div class="grid md:grid-cols-2 gap-6 text-base md:text-lg">
                         <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
-                            <h3 class="text-2xl font-semibold mb-3">Aileen Palmer: The Activist Poet</h3>
+                            <h3 class="text-xl md:text-2xl font-semibold mb-3">Aileen Palmer: The Activist Poet</h3>
                             <p>A British-Australian poet and activist. Her life experiences drove her to make political and poetic messages <strong class="highlight highlight-de">accessible</strong> and <strong class="highlight highlight-de">impactful</strong> for a wider audience, favoring <strong class="highlight highlight-de">Dynamic Equivalence</strong>.</p>
                         </div>
                         <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
-                            <h3 class="text-2xl font-semibold mb-3">Huỳnh Sanh Thông: The Scholar</h3>
+                            <h3 class="text-xl md:text-2xl font-semibold mb-3">Huỳnh Sanh Thông: The Scholar</h3>
                             <p>A distinguished Vietnamese American scholar. He dedicated his career to the <strong class="highlight highlight-fe">preservation</strong> and <strong class="highlight highlight-fe">scholarly dissemination</strong> of Vietnamese literature, using <strong class="highlight highlight-fe">Formal Equivalence</strong> to maintain <strong class="highlight highlight-fe">linguistic fidelity</strong>.</p>
                         </div>
                     </div>
                 </section>
                 <!-- Analysis Tab -->
                 <section id="analysis" class="tab-content">
-                    <h2 class="text-3xl mb-6">Case Study: Poem Translations</h2>
+                    <h2 class="text-2xl md:text-3xl mb-6">Case Study: Poem Translations</h2>
                      <!-- Poem 1 -->
-                    <div class="border border-slate-200 rounded-xl p-6 md:p-8 mb-8">
-                        <h3 class="text-2xl font-bold mb-4">Ngắm Trăng <span class="text-xl font-normal text-slate-500">(Moonlight)</span></h3>
-                        <div class="space-y-2 text-lg">
+                    <div class="border border-slate-200 rounded-xl p-4 md:p-6 mb-8">
+                        <h3 class="text-xl md:text-2xl font-bold mb-4">Ngắm Trăng <span class="text-lg md:text-xl font-normal text-slate-500">(Moonlight)</span></h3>
+                        <div class="space-y-2 text-base md:text-lg">
                             <div><p class="clickable-line">Trong tù không rượu cũng không hoa,</p><div class="translations"><p class="mb-2"><strong class="font-semibold text-sky-700">A. Palmer:</strong> "For prisoners, there is no alcohol nor flowers,"</p><p><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "In prison there's no alcohol nor flower,"</p></div></div>
                             <div><p class="clickable-line">Trước cảnh đẹp đêm nay biết làm thế nào?</p><div class="translations"><p class="mb-2"><strong class="font-semibold text-sky-700">A. Palmer:</strong> "But the night is so lovely, how can we celebrate it?"</p><p><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "With what to celebrate this lovely night?"</p></div></div>
                             <div><p class="clickable-line">Người hướng ra trước song ngắm trăng sáng,</p><div class="translations"><p class="mb-2"><strong class="font-semibold text-sky-700">A. Palmer:</strong> "I go to the air-hole and stare up at the moon,"</p><p><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "I go to the window and watch the moon,"</p></div></div>
@@ -191,9 +193,9 @@
                         </div>
                     </div>
                     <!-- Poem 2 -->
-                    <div class="border border-slate-200 rounded-xl p-6 md:p-8">
-                        <h3 class="text-2xl font-bold mb-4">Đi Đường <span class="text-xl font-normal text-slate-500">(On The Road)</span></h3>
-                        <div class="space-y-2 text-lg">
+                    <div class="border border-slate-200 rounded-xl p-4 md:p-6">
+                        <h3 class="text-xl md:text-2xl font-bold mb-4">Đi Đường <span class="text-lg md:text-xl font-normal text-slate-500">(On The Road)</span></h3>
+                        <div class="space-y-2 text-base md:text-lg">
                             <div><p class="clickable-line">Có đi đường mới biết đường đi khó,</p><div class="translations"><p class="mb-2"><strong class="font-semibold text-sky-700">A. Palmer:</strong> "Only when out on the road can we take stock of our dangers,"</p><p><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "He knows the road is rough who walks the road."</p></div></div>
                             <div><p class="clickable-line">Hết lớp núi này lại tiếp đến lớp núi khác;</p><div class="translations"><p class="mb-2"><strong class="font-semibold text-sky-700">A. Palmer:</strong> "After we climb one mountain, another looms into view:"</p><p><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "One mountain range, another mountain range . . ."</p></div></div>
                             <div><p class="clickable-line">Khi đã vượt các lớp núi lên đến đỉnh cao chót,</p><div class="translations"><p class="mb-2"><strong class="font-semibold text-sky-700">A. Palmer:</strong> "But, once we have struggled up to the top of the mountain range,"</p><p><strong class="font-semibold text-teal-700">H.S. Thông:</strong> "Keep struggling up and reach the highest peak:"</p></div></div>
@@ -203,8 +205,8 @@
                 </section>
                 <!-- Limitations Tab -->
                 <section id="limitations" class="tab-content">
-                    <h2 class="text-3xl mb-6">Limitations of the Study</h2>
-                    <div class="space-y-4 text-lg leading-relaxed">
+                    <h2 class="text-2xl md:text-3xl mb-6">Limitations of the Study</h2>
+                    <div class="space-y-4 text-base md:text-lg leading-relaxed">
                         <ul class="list-disc list-inside space-y-4">
                             <li><strong class="text-slate-800">Limited Scope:</strong> The analysis is based on only <span class="highlight highlight-concept">two poems</span> and <span class="highlight highlight-concept">two translators</span>. Findings may not be generalizable to all literary translation.</li>
                             <li><strong class="text-slate-800">Qualitative Nature:</strong> The findings are <span class="highlight highlight-concept">interpretive and subjective</span>, based on close reading rather than statistical data.</li>
