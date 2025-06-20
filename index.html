@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Analysis of Translation</title>
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,7 +16,7 @@
             font-family: 'Inter', sans-serif;
             background-color: #f1f5f9; /* slate-100 */
             color: #475569; /* slate-600 */
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2394a3b8' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2394a3b8' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
         .main-container {
             background: white;
@@ -28,17 +30,16 @@
         }
         .tab-button {
             transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            border-top: 3px solid transparent;
+            border-left: 4px solid transparent;
         }
         .tab-button.active {
             color: #0ea5e9; /* sky-500 */
-            border-bottom-color: #0ea5e9;
+            border-left-color: #0ea5e9;
             background-color: #f8fafc; /* slate-50 */
         }
         .tab-button:hover:not(.active) {
             background-color: #f8fafc; /* slate-50 */
-            transform: translateY(-2px);
+            transform: translateX(2px);
         }
         .tab-content {
             display: none;
@@ -100,42 +101,51 @@
 </head>
 <body class="antialiased p-2 sm:p-4 md:p-8">
 
-    <div class="container mx-auto max-w-5xl">
+    <div class="container mx-auto max-w-6xl">
         <header class="text-center mb-8">
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-2">The Translator's Lens</h1>
             <p class="text-lg md:text-xl text-slate-500">How Background Shapes Interpretation</p>
         </header>
 
-        <main class="main-container">
-            <nav class="flex flex-wrap md:flex-nowrap border-b border-slate-200">
-                <button data-tab="intro" class="tab-button active w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                    Introduction
-                </button>
-                <button data-tab="theory" class="tab-button w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
-                    The Theory
-                </button>
-                <button data-tab="translators" class="tab-button w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                    The Translators
-                </button>
-                <button data-tab="analysis" class="tab-button w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                    Poem Analysis
-                </button>
-                <button data-tab="limitations" class="tab-button w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
-                    Limitations
-                </button>
-                 <button data-tab="presenters" class="tab-button w-full md:w-auto md:flex-1 p-4 text-base md:text-lg font-semibold flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                    Presenters
-                </button>
+        <main class="main-container md:grid md:grid-cols-12">
+            <!-- Vertical Tab Navigation -->
+            <nav class="md:col-span-3 lg:col-span-2 p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                <div class="flex flex-col space-y-1">
+                    <button data-tab="intro" class="tab-button active w-full p-3 text-base font-semibold flex items-center justify-start gap-3 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        Introduction
+                    </button>
+                    <button data-tab="theory" class="tab-button w-full p-3 text-base font-semibold flex items-center justify-start gap-3 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
+                        The Theory
+                    </button>
+                    <button data-tab="translators" class="tab-button w-full p-3 text-base font-semibold flex items-center justify-start gap-3 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        The Translators
+                    </button>
+                    <button data-tab="analysis" class="tab-button w-full p-3 text-base font-semibold flex items-center justify-start gap-3 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                        Poem Analysis
+                    </button>
+                    <button data-tab="limitations" class="tab-button w-full p-3 text-base font-semibold flex items-center justify-start gap-3 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
+                        Limitations
+                    </button>
+                    <a href="https://thearchangel1998.github.io/wrapupgame/" target="_blank" rel="noopener noreferrer" class="tab-button w-full p-3 text-base font-semibold flex items-center justify-start gap-3 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><path d="M17.5 15a2.5 2.5 0 0 0 0-5h-3a2.5 2.5 0 0 0 0 5h3Z"/><path d="M3 16V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>
+                        Minigame
+                    </a>
+                     <button data-tab="presenters" class="tab-button w-full p-3 text-base font-semibold flex items-center justify-start gap-3 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        Presenters
+                    </button>
+                </div>
             </nav>
 
-            <div class="p-4 md:p-8">
-                <section id="intro" class="tab-content active">
+            <!-- Tab Content -->
+            <div class="md:col-span-9 lg:col-span-10 p-4 md:p-8">
+                <!-- Introduction Tab -->
+                 <section id="intro" class="tab-content active">
                     <h2 class="text-2xl md:text-3xl mb-6">Introduction & Rationale</h2>
                     <div class="space-y-4 text-base md:text-lg leading-relaxed">
                         <p>The field of translation has evolved beyond a simple exchange of words. It is now seen as a complex process involving <span class="highlight highlight-concept">culture</span>, <span class="highlight highlight-concept">communication</span>, and the <span class="highlight highlight-concept">human element</span>.</p>
@@ -143,6 +153,7 @@
                         <p>This study shows how a translator’s background affects their choices, proving they are active interpreters, not neutral conduits.</p>
                     </div>
                 </section>
+                <!-- Theory Tab -->
                 <section id="theory" class="tab-content">
                     <h2 class="text-2xl md:text-3xl mb-6">Nida's Theories of Equivalence</h2>
                      <div class="space-y-8 text-base md:text-lg">
@@ -156,6 +167,7 @@
                         </div>
                     </div>
                  </section>
+                <!-- Translators Tab -->
                 <section id="translators" class="tab-content">
                     <h2 class="text-2xl md:text-3xl mb-6">Meet the Translators</h2>
                     <p class="text-center text-slate-500 mb-8 -mt-4">Learn more about the two translators and their approaches.</p>
@@ -174,6 +186,7 @@
                         </div>
                      </div>
                 </section>
+                <!-- Analysis Tab -->
                 <section id="analysis" class="tab-content">
                     <h2 class="text-2xl md:text-3xl mb-6">Case Study: Poem Translations</h2>
                     <div class="border border-slate-200 rounded-xl p-4 md:p-6 mb-8">
@@ -195,6 +208,7 @@
                         </div>
                      </div>
                 </section>
+                <!-- Limitations Tab -->
                 <section id="limitations" class="tab-content">
                     <h2 class="text-2xl md:text-3xl mb-6">Limitations of the Study</h2>
                      <div class="space-y-4 text-base md:text-lg leading-relaxed">
@@ -206,6 +220,7 @@
                         </ul>
                     </div>
                 </section>
+                <!-- Presenters Tab -->
                 <section id="presenters" class="tab-content">
                     <h2 class="text-2xl md:text-3xl mb-6">List of Presenters</h2>
                     <div class="text-base md:text-lg leading-relaxed">
@@ -226,16 +241,27 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // --- Tab Navigation ---
-             const tabButtons = document.querySelectorAll('.tab-button');
+            const tabButtons = document.querySelectorAll('.tab-button[data-tab]'); // Select only buttons that switch tabs
             const tabContents = document.querySelectorAll('.tab-content');
+            const allNavButtons = document.querySelectorAll('.tab-button');
+            
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
+                    // Deactivate all tab buttons (not the external link)
                     tabButtons.forEach(btn => btn.classList.remove('active'));
+                    // Hide all tab content
                     tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Activate the clicked tab button and its content
                     button.classList.add('active');
-                    document.getElementById(button.dataset.tab).classList.add('active');
+                    const tabId = button.dataset.tab;
+                    const activeTabContent = document.getElementById(tabId);
+                    if (activeTabContent) {
+                        activeTabContent.classList.add('active');
+                    }
                 });
             });
+            
             // --- Accordion for Poem Translations ---
             const clickableLines = document.querySelectorAll('.clickable-line');
             clickableLines.forEach(line => {
@@ -244,11 +270,13 @@
                     this.parentElement.nextElementSibling.classList.toggle('show');
                 });
             });
+
             // --- Text-to-Speech (TTS) Functionality ---
             const synthesis = window.speechSynthesis;
             let voices = [];
             let currentUtterance = null;
             let speakingButton = null;
+
             function populateVoiceList() {
                 voices = synthesis.getVoices();
                 if (voices.length > 0) {
@@ -276,12 +304,12 @@
                     event.stopPropagation();
                     
                     const textToSpeak = this.dataset.text;
-                     const langAttr = this.dataset.lang;
+                    const langAttr = this.dataset.lang;
                     const genderAttr = this.dataset.gender;
 
                     if (speakingButton === this) {
                         stopSpeech();
-                         return;
+                        return;
                     }
                     
                     stopSpeech();
@@ -291,7 +319,7 @@
                         currentUtterance = new SpeechSynthesisUtterance(textToSpeak);
 
                         const langPrefix = langAttr.split('-')[0];
-                         let potentialVoices = voices.filter(v => v.lang.toLowerCase().startsWith(langPrefix));
+                        let potentialVoices = voices.filter(v => v.lang.toLowerCase().startsWith(langPrefix));
 
                         if (genderAttr && potentialVoices.length > 0) {
                             const genderedVoices = potentialVoices.filter(v => {
@@ -332,7 +360,8 @@
                 });
             });
 
-            tabButtons.forEach(button => {
+            // Stop speech when switching tabs
+            document.querySelectorAll('.tab-button[data-tab]').forEach(button => {
                 button.addEventListener('click', stopSpeech);
             });
         });
