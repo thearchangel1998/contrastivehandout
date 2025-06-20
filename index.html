@@ -243,16 +243,11 @@
             // --- Tab Navigation ---
             const tabButtons = document.querySelectorAll('.tab-button[data-tab]'); // Select only buttons that switch tabs
             const tabContents = document.querySelectorAll('.tab-content');
-            const allNavButtons = document.querySelectorAll('.tab-button');
             
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    // Deactivate all tab buttons (not the external link)
                     tabButtons.forEach(btn => btn.classList.remove('active'));
-                    // Hide all tab content
                     tabContents.forEach(content => content.classList.remove('active'));
-
-                    // Activate the clicked tab button and its content
                     button.classList.add('active');
                     const tabId = button.dataset.tab;
                     const activeTabContent = document.getElementById(tabId);
@@ -277,21 +272,61 @@
             let currentUtterance = null;
             let speakingButton = null;
 
+            // Function to get and enable voices
             function populateVoiceList() {
                 voices = synthesis.getVoices();
                 if (voices.length > 0) {
-                     document.querySelectorAll('.tts-button').forEach(button => button.disabled = false);
+                    console.log("Available voices:", voices);
+                    document.querySelectorAll('.tts-button').forEach(button => button.disabled = false);
                 }
             }
             
+            // Initially disable buttons until voices are loaded
             document.querySelectorAll('.tts-button').forEach(button => button.disabled = true);
+
+            // Populate voices when they are loaded
             populateVoiceList();
             if (synthesis.onvoiceschanged !== undefined) {
                 synthesis.onvoiceschanged = populateVoiceList;
             }
 
+            // Function to find the best matching British voice
+            function findBestBritishVoice(gender) {
+                if (!voices || voices.length === 0) return null;
+
+                const genderLC = gender.toLowerCase();
+                
+                // --- Criteria for voice selection, in order of preference ---
+                const criteria = [
+                    // 1. Exact match for 'en-GB' and a name that indicates the correct gender.
+                    v => v.lang === 'en-GB' && v.name.toLowerCase().includes(genderLC),
+                    // 2. Exact match for 'en-GB' and a common default name for that gender.
+                    v => v.lang === 'en-GB' && (genderLC === 'female' ? v.name.includes('Female') : v.name.includes('Male')),
+                    // 3. Any 'en-GB' voice if a gender-specific one isn't found.
+                    v => v.lang === 'en-GB',
+                    // 4. Fallback: A voice with "British" in the name for browsers that don't use 'en-GB' lang tag.
+                    v => v.name.toLowerCase().includes('british') && v.name.toLowerCase().includes(genderLC),
+                    v => v.name.toLowerCase().includes('british'),
+                    // 5. Fallback: Google's specific UK English voice names.
+                    v => genderLC === 'female' && v.name === 'Google UK English Female',
+                    v => genderLC === 'male' && v.name === 'Google UK English Male',
+                ];
+
+                for (const criterion of criteria) {
+                    const foundVoices = voices.filter(criterion);
+                    if (foundVoices.length > 0) {
+                        // Prefer non-local service voices as they can be higher quality.
+                        const nonLocal = foundVoices.filter(v => !v.localService);
+                        return nonLocal.length > 0 ? nonLocal[0] : foundVoices[0];
+                    }
+                }
+                return null; // No British voice found
+            }
+
             function stopSpeech() {
-                synthesis.cancel();
+                if(synthesis.speaking) {
+                    synthesis.cancel();
+                }
                 if (speakingButton) {
                     speakingButton.classList.remove('is-speaking');
                     speakingButton = null;
@@ -304,7 +339,6 @@
                     event.stopPropagation();
                     
                     const textToSpeak = this.dataset.text;
-                    const langAttr = this.dataset.lang;
                     const genderAttr = this.dataset.gender;
 
                     if (speakingButton === this) {
@@ -314,34 +348,26 @@
                     
                     stopSpeech();
 
-                    // Use a small timeout to prevent race conditions
+                    // Use a timeout to allow the previous speech to fully stop.
                     setTimeout(() => {
                         currentUtterance = new SpeechSynthesisUtterance(textToSpeak);
-
-                        const langPrefix = langAttr.split('-')[0];
-                        let potentialVoices = voices.filter(v => v.lang.toLowerCase().startsWith(langPrefix));
-
-                        if (genderAttr && potentialVoices.length > 0) {
-                            const genderedVoices = potentialVoices.filter(v => {
-                                 const name = v.name.toLowerCase();
-                                return genderAttr === 'female' ? name.includes('female') || name.includes('zira') || name.includes('susan') || name.includes('kathy') : name.includes('male') || name.includes('david') || name.includes('mark');
-                            });
-                             if (genderedVoices.length > 0) {
-                                potentialVoices = genderedVoices;
-                            }
-                        }
                         
-                        const selectedVoice = potentialVoices.length > 0 ? potentialVoices[0] : null;
+                        // Find the best available British voice based on gender.
+                        let selectedVoice = findBestBritishVoice(genderAttr);
 
+                        // If a British voice is found, use it.
                         if (selectedVoice) {
                             currentUtterance.voice = selectedVoice;
+                            console.log(`Using British Voice: ${selectedVoice.name} (${selectedVoice.lang})`);
                         } else {
-                            currentUtterance.lang = langAttr;
-                            console.warn(`No specific voice found for lang: ${langAttr} and gender: ${genderAttr}. Using browser default.`);
+                            // If no British voice is found, set the language to 'en-GB' as a fallback.
+                            currentUtterance.lang = 'en-GB';
+                            console.warn("No specific British voice found. Attempting to use browser default for 'en-GB'.");
                         }
 
                         speakingButton = button;
                         button.classList.add('is-speaking');
+
                         currentUtterance.onend = () => {
                             if (speakingButton) speakingButton.classList.remove('is-speaking');
                             speakingButton = null;
@@ -356,7 +382,7 @@
                         }
 
                         synthesis.speak(currentUtterance);
-                    }, 50); // 50ms delay
+                    }, 100);
                 });
             });
 
