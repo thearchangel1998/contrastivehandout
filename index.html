@@ -134,6 +134,10 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
                         Limitations
                     </button>
+                     <button data-tab="qna" class="tab-button w-full p-3 text-base font-semibold flex items-center justify-start gap-3 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        Q&A Queue
+                    </button>
                     <a href="https://thearchangel1998.github.io/wrapupgame/" target="_blank" rel="noopener noreferrer" class="tab-button w-full p-3 text-base font-semibold flex items-center justify-start gap-3 rounded-lg">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><path d="M17.5 15a2.5 2.5 0 0 0 0-5h-3a2.5 2.5 0 0 0 0 5h3Z"/><path d="M3 16V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>
                         Minigame
@@ -330,6 +334,44 @@
                         </div>
                     </div>
                 </section>
+                 <!-- Q&A Queue Tab -->
+                <section id="qna" class="tab-content">
+                    <h2 class="text-2xl md:text-3xl mb-6">Q&A Queue</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <div id="join-queue-section" class="bg-white p-6 rounded-lg shadow-md">
+                                <h3 class="text-xl font-semibold mb-4">Join the Queue</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="userName" class="block text-sm font-medium text-gray-700">Your Name</label>
+                                        <input type="text" id="userName" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500">
+                                    </div>
+                                    <div>
+                                        <label for="questionCount" class="block text-sm font-medium text-gray-700">Number of Questions</label>
+                                        <input type="number" id="questionCount" min="1" value="1" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500">
+                                    </div>
+                                    <button id="joinQueueBtn" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Join Queue</button>
+                                </div>
+                            </div>
+                            <div id="user-queue-info" class="hidden mt-6 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-r-lg">
+                                <p id="user-queue-message"></p>
+                            </div>
+                            <div id="admin-controls" class="hidden mt-6">
+                                 <h3 class="text-xl font-semibold mb-4">Admin Controls</h3>
+                                <div class="flex space-x-2">
+                                     <button id="nextPersonBtn" class="bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition duration-300">Next Person</button>
+                                     <button id="clearQueueBtn" class="bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Clear Queue</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-4">Current Queue</h3>
+                            <div id="queue-display" class="bg-slate-50 p-4 rounded-lg h-96 overflow-y-auto">
+                                <p>The queue is currently empty.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <!-- Presenters Tab -->
                 <section id="presenters" class="tab-content">
                     <h2 class="text-2xl md:text-3xl mb-6">List of Presenters</h2>
@@ -347,161 +389,268 @@
             </div>
         </main>
     </div>
+    
+    <!-- Firebase Libraries -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, getDocs, writeBatch, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // --- Tab Navigation ---
-            const tabButtons = document.querySelectorAll('.tab-button[data-tab]'); // Select only buttons that switch tabs
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    button.classList.add('active');
-                    const tabId = button.dataset.tab;
-                    const activeTabContent = document.getElementById(tabId);
-                    if (activeTabContent) {
-                        activeTabContent.classList.add('active');
-                    }
-                });
-            });
-            
-            // --- Accordion for Poem Translations ---
-            const clickableLines = document.querySelectorAll('.clickable-line');
-            clickableLines.forEach(line => {
-                line.addEventListener('click', function () {
-                    this.classList.toggle('active');
-                    this.parentElement.nextElementSibling.classList.toggle('show');
-                });
-            });
+        // --- Firebase Configuration and Initialization ---
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const appId = typeof __app_id !== 'undefined' ? 'DoTuanNam2809' : 'default-app-id';
+        
+        // IMPORTANT: Replace this with your actual User ID from the console log to enable admin controls.
+        const ADMIN_USER_ID = "DoTuanNam2809";
 
-            // --- Text-to-Speech (TTS) Functionality ---
-            const synthesis = window.speechSynthesis;
-            let voices = [];
-            let currentUtterance = null;
-            let speakingButton = null;
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        let userId;
 
-            // Function to get and enable voices
-            function populateVoiceList() {
-                voices = synthesis.getVoices();
-                if (voices.length > 0) {
-                    console.log("Available voices:", voices);
-                    document.querySelectorAll('.tts-button').forEach(button => button.disabled = false);
+        const queueCollectionRef = collection(db, `artifacts/${appId}/public/data/queue`);
+
+        // --- DOM Elements ---
+        const joinQueueBtn = document.getElementById('joinQueueBtn');
+        const userNameInput = document.getElementById('userName');
+        const questionCountInput = document.getElementById('questionCount');
+        const queueDisplay = document.getElementById('queue-display');
+        const userQueueInfo = document.getElementById('user-queue-info');
+        const userQueueMessage = document.getElementById('user-queue-message');
+        const nextPersonBtn = document.getElementById('nextPersonBtn');
+        const clearQueueBtn = document.getElementById('clearQueueBtn');
+        const adminControls = document.getElementById('admin-controls');
+
+        // --- Authentication and Main Logic ---
+        async function main() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
                 }
-            }
-            
-            // Initially disable buttons until voices are loaded
-            document.querySelectorAll('.tts-button').forEach(button => button.disabled = true);
-
-            // Populate voices when they are loaded
-            populateVoiceList();
-            if (synthesis.onvoiceschanged !== undefined) {
-                synthesis.onvoiceschanged = populateVoiceList;
-            }
-
-            // Function to find the best matching British voice
-            function findBestBritishVoice(gender) {
-                if (!voices || voices.length === 0) return null;
-
-                const genderLC = gender.toLowerCase();
+                userId = auth.currentUser?.uid;
                 
-                // --- Criteria for voice selection, in order of preference ---
-                const criteria = [
-                    // 1. Exact match for 'en-GB' and a name that indicates the correct gender.
-                    v => v.lang === 'en-GB' && v.name.toLowerCase().includes(genderLC),
-                    // 2. Exact match for 'en-GB' and a common default name for that gender.
-                    v => v.lang === 'en-GB' && (genderLC === 'female' ? v.name.includes('Female') : v.name.includes('Male')),
-                    // 3. Any 'en-GB' voice if a gender-specific one isn't found.
-                    v => v.lang === 'en-GB',
-                    // 4. Fallback: A voice with "British" in the name for browsers that don't use 'en-GB' lang tag.
-                    v => v.name.toLowerCase().includes('british') && v.name.toLowerCase().includes(genderLC),
-                    v => v.name.toLowerCase().includes('british'),
-                    // 5. Fallback: Google's specific UK English voice names.
-                    v => genderLC === 'female' && v.name === 'Google UK English Female',
-                    v => genderLC === 'male' && v.name === 'Google UK English Male',
-                ];
+                // Log the user ID to the console for the admin to find.
+                console.log("Your User ID is:", userId);
 
-                for (const criterion of criteria) {
-                    const foundVoices = voices.filter(criterion);
-                    if (foundVoices.length > 0) {
-                        // Prefer non-local service voices as they can be higher quality.
-                        const nonLocal = foundVoices.filter(v => !v.localService);
-                        return nonLocal.length > 0 ? nonLocal[0] : foundVoices[0];
-                    }
+                // Show admin controls only if the current user is the admin.
+                if (userId === ADMIN_USER_ID) {
+                    adminControls.classList.remove('hidden');
                 }
-                return null; // No British voice found
+
+                setupQueueListeners();
+            } catch (error) {
+                console.error("Authentication failed:", error);
+                queueDisplay.innerHTML = `<p class="text-center text-red-500">Could not connect to the queue service. Please check your Firebase configuration and refresh the page.</p>`;
             }
+        }
 
-            function stopSpeech() {
-                if(synthesis.speaking) {
-                    synthesis.cancel();
+        function setupQueueListeners() {
+            joinQueueBtn.addEventListener('click', async () => {
+                const userName = userNameInput.value.trim();
+                const questionCount = parseInt(questionCountInput.value, 10);
+                if (userName && questionCount > 0) {
+                    await addDoc(queueCollectionRef, {
+                        name: userName,
+                        questions: questionCount,
+                        timestamp: new Date(),
+                        userId: userId
+                    });
+                    userNameInput.value = '';
+                    questionCountInput.value = '1';
                 }
-                if (speakingButton) {
-                    speakingButton.classList.remove('is-speaking');
-                    speakingButton = null;
-                }
-                currentUtterance = null;
-            }
-
-            document.querySelectorAll('.tts-button').forEach(button => {
-                button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    
-                    const textToSpeak = this.dataset.text;
-                    const genderAttr = this.dataset.gender;
-
-                    if (speakingButton === this) {
-                        stopSpeech();
-                        return;
-                    }
-                    
-                    stopSpeech();
-
-                    // Use a timeout to allow the previous speech to fully stop.
-                    setTimeout(() => {
-                        currentUtterance = new SpeechSynthesisUtterance(textToSpeak);
-                        
-                        // Find the best available British voice based on gender.
-                        let selectedVoice = findBestBritishVoice(genderAttr);
-
-                        // If a British voice is found, use it.
-                        if (selectedVoice) {
-                            currentUtterance.voice = selectedVoice;
-                            console.log(`Using British Voice: ${selectedVoice.name} (${selectedVoice.lang})`);
-                        } else {
-                            // If no British voice is found, set the language to 'en-GB' as a fallback.
-                            currentUtterance.lang = 'en-GB';
-                            console.warn("No specific British voice found. Attempting to use browser default for 'en-GB'.");
-                        }
-
-                        speakingButton = button;
-                        button.classList.add('is-speaking');
-
-                        currentUtterance.onend = () => {
-                            if (speakingButton) speakingButton.classList.remove('is-speaking');
-                            speakingButton = null;
-                            currentUtterance = null;
-                        };
-                        
-                        currentUtterance.onerror = (e) => {
-                            console.error('Speech synthesis error:', e);
-                            if (speakingButton) speakingButton.classList.remove('is-speaking');
-                            speakingButton = null;
-                            currentUtterance = null;
-                        }
-
-                        synthesis.speak(currentUtterance);
-                    }, 100);
-                });
             });
 
-            // Stop speech when switching tabs
-            document.querySelectorAll('.tab-button[data-tab]').forEach(button => {
-                button.addEventListener('click', stopSpeech);
+            const q = query(queueCollectionRef);
+            onSnapshot(q, (snapshot) => {
+                if (snapshot.empty) {
+                    queueDisplay.innerHTML = '<p class="text-center text-slate-500">The queue is currently empty.</p>';
+                    document.getElementById('join-queue-section').classList.remove('hidden');
+                    userQueueInfo.classList.add('hidden');
+                    return;
+                }
+
+                const sortedDocs = [...snapshot.docs].sort((a, b) => {
+                    const dataA = a.data();
+                    const dataB = b.data();
+                    const questionDiff = dataA.questions - dataB.questions;
+                    if (questionDiff !== 0) {
+                        return questionDiff;
+                    }
+                    return dataA.timestamp.toMillis() - dataB.timestamp.toMillis();
+                });
+
+                queueDisplay.innerHTML = '';
+                let userInQueue = false;
+                let userQueueNumber = 0;
+
+                sortedDocs.forEach((doc, index) => {
+                    const person = doc.data();
+                    const queueNumber = index + 1;
+                    
+                    const element = document.createElement('div');
+                    element.className = `p-3 mb-2 rounded-lg flex justify-between items-center ${person.userId === userId ? 'bg-yellow-100 border-l-4 border-yellow-500' : 'bg-white shadow-sm'}`;
+                    element.innerHTML = `<div><span class="font-bold text-blue-800 text-lg">${queueNumber}. ${person.name}</span> <span class="text-sm text-slate-500">(${person.questions} question${person.questions > 1 ? 's' : ''})</span></div>`;
+                    queueDisplay.appendChild(element);
+
+                    if (person.userId === userId) {
+                        userInQueue = true;
+                        userQueueNumber = queueNumber;
+                    }
+                });
+
+                if (userInQueue) {
+                    const currentUserData = sortedDocs.find(doc => doc.data().userId === userId)?.data();
+                    if (currentUserData) {
+                         userQueueMessage.textContent = `Welcome, ${currentUserData.name}! You are number ${userQueueNumber} in the queue.`;
+                         userQueueInfo.classList.remove('hidden');
+                         document.getElementById('join-queue-section').classList.add('hidden');
+                    }
+                } else {
+                     userQueueInfo.classList.add('hidden');
+                     document.getElementById('join-queue-section').classList.remove('hidden');
+                }
+            });
+
+            nextPersonBtn.addEventListener('click', async () => {
+                const querySnapshot = await getDocs(queueCollectionRef);
+                if (!querySnapshot.empty) {
+                     const sortedDocs = [...querySnapshot.docs].sort((a, b) => {
+                        const dataA = a.data();
+                        const dataB = b.data();
+                        const questionDiff = dataA.questions - dataB.questions;
+                        if (questionDiff !== 0) {
+                            return questionDiff;
+                        }
+                        return dataA.timestamp.toMillis() - dataB.timestamp.toMillis();
+                    });
+                    const docToDeleteRef = sortedDocs[0].ref;
+                    await deleteDoc(docToDeleteRef);
+                }
+            });
+
+            clearQueueBtn.addEventListener('click', async () => {
+                const querySnapshot = await getDocs(queueCollectionRef);
+                const batch = writeBatch(db);
+                querySnapshot.docs.forEach((doc) => batch.delete(doc.ref));
+                await batch.commit();
+            });
+        }
+        
+        // --- Standard Page Script ---
+        const tabButtons = document.querySelectorAll('.tab-button[data-tab]');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                button.classList.add('active');
+                const tabId = button.dataset.tab;
+                document.getElementById(tabId)?.classList.add('active');
             });
         });
-    </script>
+        
+        const clickableLines = document.querySelectorAll('.clickable-line');
+        clickableLines.forEach(line => {
+            line.addEventListener('click', function () {
+                this.classList.toggle('active');
+                this.parentElement.nextElementSibling.classList.toggle('show');
+            });
+        });
 
+        const ttsSynthesis = window.speechSynthesis;
+        let ttsVoices = [];
+        let ttsCurrentUtterance = null;
+        let ttsSpeakingButton = null;
+
+        function populateTtsVoiceList() {
+            ttsVoices = ttsSynthesis.getVoices();
+            if (ttsVoices.length > 0) {
+                document.querySelectorAll('.tts-button').forEach(button => button.disabled = false);
+            }
+        }
+        
+        document.querySelectorAll('.tts-button').forEach(button => button.disabled = true);
+        populateTtsVoiceList();
+        if (ttsSynthesis.onvoiceschanged !== undefined) {
+            ttsSynthesis.onvoiceschanged = populateTtsVoiceList;
+        }
+
+        function findBestBritishVoice(gender) {
+            if (!ttsVoices || ttsVoices.length === 0) return null;
+            const genderLC = gender.toLowerCase();
+            const criteria = [
+                v => v.lang === 'en-GB' && v.name.toLowerCase().includes(genderLC),
+                v => v.lang === 'en-GB' && (genderLC === 'female' ? v.name.includes('Female') : v.name.includes('Male')),
+                v => v.lang === 'en-GB',
+                v => v.name.toLowerCase().includes('british') && v.name.toLowerCase().includes(genderLC),
+                v => v.name.toLowerCase().includes('british'),
+                v => genderLC === 'female' && v.name === 'Google UK English Female',
+                v => genderLC === 'male' && v.name === 'Google UK English Male',
+            ];
+            for (const criterion of criteria) {
+                const foundVoices = ttsVoices.filter(criterion);
+                if (foundVoices.length > 0) {
+                    const nonLocal = foundVoices.filter(v => !v.localService);
+                    return nonLocal.length > 0 ? nonLocal[0] : foundVoices[0];
+                }
+            }
+            return null;
+        }
+
+        function stopTtsSpeech() {
+            if(ttsSynthesis.speaking) ttsSynthesis.cancel();
+            if (ttsSpeakingButton) {
+                ttsSpeakingButton.classList.remove('is-speaking');
+                ttsSpeakingButton = null;
+            }
+            ttsCurrentUtterance = null;
+        }
+
+        document.querySelectorAll('.tts-button').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.stopPropagation();
+                const textToSpeak = this.dataset.text;
+                const genderAttr = this.dataset.gender;
+                if (ttsSpeakingButton === this) {
+                    stopTtsSpeech();
+                    return;
+                }
+                stopTtsSpeech();
+                setTimeout(() => {
+                    ttsCurrentUtterance = new SpeechSynthesisUtterance(textToSpeak);
+                    let selectedVoice = findBestBritishVoice(genderAttr);
+                    if (selectedVoice) {
+                        ttsCurrentUtterance.voice = selectedVoice;
+                    } else {
+                        ttsCurrentUtterance.lang = 'en-GB';
+                    }
+                    ttsSpeakingButton = button;
+                    button.classList.add('is-speaking');
+                    ttsCurrentUtterance.onend = () => {
+                        if (ttsSpeakingButton) ttsSpeakingButton.classList.remove('is-speaking');
+                        ttsSpeakingButton = null;
+                        ttsCurrentUtterance = null;
+                    };
+                    ttsCurrentUtterance.onerror = (e) => {
+                        console.error('Speech synthesis error:', e);
+                        if (ttsSpeakingButton) ttsSpeakingButton.classList.remove('is-speaking');
+                        ttsSpeakingButton = null;
+                        ttsCurrentUtterance = null;
+                    }
+                    ttsSynthesis.speak(ttsCurrentUtterance);
+                }, 100);
+            });
+        });
+
+        document.querySelectorAll('.tab-button[data-tab]').forEach(button => {
+            button.addEventListener('click', stopTtsSpeech);
+        });
+
+        main();
+    </script>
 </body>
 </html>
