@@ -404,27 +404,9 @@
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, getDocs, writeBatch, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-     // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyAaqhVYn0AAt8dbHhfwtO6GDSzuFuHjPE0",
-  authDomain: "presentations-3ae0e.firebaseapp.com",
-  projectId: "presentations-3ae0e",
-  storageBucket: "presentations-3ae0e.firebasestorage.app",
-  messagingSenderId: "402435542082",
-  appId: "1:402435542082:web:2d1205f34e893fe218b1db",
-  measurementId: "G-3SW6NWPV0E"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+        // --- Firebase Configuration and Initialization ---
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const appId = typeof __app_id !== 'undefined' ? 'DoTuanNam2809' : 'default-app-id';
         
         // IMPORTANT: Replace "200518" with your own secret 6-digit code.
         const ADMIN_PASSWORD = "200518";
