@@ -96,7 +96,23 @@
              opacity: 0.5;
         }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-
+        
+        /* Q&A Confirmation Modal Animations */
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUpIn {
+            from { transform: translateY(30px) scale(0.95); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        #queue-confirmation-modal.show {
+            display: flex;
+            animation: fadeInModal 0.3s ease-out forwards;
+        }
+        #queue-confirmation-modal.show > div {
+            animation: slideUpIn 0.4s ease-out 0.1s forwards;
+        }
     </style>
 </head>
 <body class="antialiased p-2 sm:p-4 md:p-8">
@@ -398,6 +414,15 @@
         </main>
     </div>
     
+    <!-- Confirmation Modal -->
+    <div id="queue-confirmation-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl p-8 text-center shadow-2xl transform">
+            <svg class="w-20 h-20 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <h3 class="text-2xl font-bold mt-4">Bạn đã vào hàng!</h3>
+            <p id="confirmation-queue-number" class="text-slate-600 mt-2 text-lg"></p>
+        </div>
+    </div>
+
     <!-- Firebase Libraries -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -437,6 +462,137 @@
             const adminLoginForm = document.getElementById('admin-login-form');
             const adminPasswordInput = document.getElementById('adminPassword');
             const adminLoginBtn = document.getElementById('adminLoginBtn');
+            const confirmationModal = document.getElementById('queue-confirmation-modal');
+            const confirmationQueueNumber = document.getElementById('confirmation-queue-number');
+
+            let justJoined = false;
+
+            async function main() {
+                try {
+                    await signInAnonymously(auth);
+                    userId = auth.currentUser?.uid;
+                    setupQueueListeners();
+                } catch (error) {
+                    console.error("Authentication failed:", error);
+                    queueDisplay.innerHTML = `<p class="text-center text-red-500">Could not connect to the queue service. Please check your Firebase configuration and refresh the page.</p>`;
+                }
+            }
+
+            function setupQueueListeners() {
+                joinQueueBtn.addEventListener('click', async () => {
+                    const userName = userNameInput.value.trim();
+                    const questionCount = parseInt(questionCountInput.value, 10);
+                    if (userName && questionCount > 0) {
+                        justJoined = true;
+                        await addDoc(queueCollectionRef, {
+                            name: userName,
+                            questions: questionCount,
+                            timestamp: new Date(),
+                            userId: userId
+                        });
+                        userNameInput.value = '';
+                        questionCountInput.value = '1';
+                    }
+                });
+
+                const q = query(queueCollectionRef);
+                onSnapshot(q, (snapshot) => {
+                    if (snapshot.empty) {
+                        queueDisplay.innerHTML = '<p class="text-center text-slate-500">The queue is currently empty.</p>';
+                        document.getElementById('join-queue-section').classList.remove('hidden');
+                        userQueueInfo.classList.add('hidden');
+                        return;
+                    }
+
+                    const sortedDocs = [...snapshot.docs].sort((a, b) => {
+                        const dataA = a.data();
+                        const dataB = b.data();
+                        const questionDiff = dataA.questions - dataB.questions;
+                        if (questionDiff !== 0) {
+                            return questionDiff;
+                        }
+                        return dataA.timestamp.toMillis() - dataB.timestamp.toMillis();
+                    });
+
+                    queueDisplay.innerHTML = '';
+                    let userInQueue = false;
+                    let userQueueNumber = 0;
+                    let userName = '';
+
+                    sortedDocs.forEach((doc, index) => {
+                        const person = doc.data();
+                        const queueNumber = index + 1;
+                        
+                        const element = document.createElement('div');
+                        element.className = `p-3 mb-2 rounded-lg flex justify-between items-center ${person.userId === userId ? 'bg-yellow-100 border-l-4 border-yellow-500' : 'bg-white shadow-sm'}`;
+                        element.innerHTML = `<div><span class="font-bold text-blue-800 text-lg">${queueNumber}. ${person.name}</span> <span class="text-sm text-slate-500">(${person.questions} question${person.questions > 1 ? 's' : ''})</span></div>`;
+                        queueDisplay.appendChild(element);
+
+                        if (person.userId === userId) {
+                            userInQueue = true;
+                            userQueueNumber = queueNumber;
+                            userName = person.name;
+                        }
+                    });
+
+                    if (userInQueue) {
+                        userQueueMessage.textContent = `Welcome, ${userName}! You are number ${userQueueNumber} in the queue.`;
+                        userQueueInfo.classList.remove('hidden');
+                        document.getElementById('join-queue-section').classList.add('hidden');
+
+                        if(justJoined) {
+                            confirmationQueueNumber.textContent = `Your number is ${userQueueNumber}`;
+                            confirmationModal.classList.add('show');
+                            setTimeout(() => {
+                                confirmationModal.classList.remove('show');
+                            }, 3000);
+                            justJoined = false;
+                        }
+                    } else {
+                         userQueueInfo.classList.add('hidden');
+                         document.getElementById('join-queue-section').classList.remove('hidden');
+                    }
+                });
+
+                showAdminLoginBtn.addEventListener('click', () => {
+                    adminLoginForm.classList.toggle('hidden');
+                });
+
+                adminLoginBtn.addEventListener('click', () => {
+                    if (adminPasswordInput.value === ADMIN_PASSWORD) {
+                        adminLoginForm.classList.add('hidden');
+                        adminControls.classList.remove('hidden');
+                        showAdminLoginBtn.classList.add('hidden');
+                    } else {
+                        alert('Incorrect password.');
+                    }
+                    adminPasswordInput.value = '';
+                });
+
+                nextPersonBtn.addEventListener('click', async () => {
+                    const querySnapshot = await getDocs(queueCollectionRef);
+                    if (!querySnapshot.empty) {
+                         const sortedDocs = [...querySnapshot.docs].sort((a, b) => {
+                            const dataA = a.data();
+                            const dataB = b.data();
+                            const questionDiff = dataA.questions - dataB.questions;
+                            if (questionDiff !== 0) {
+                                return questionDiff;
+                            }
+                            return dataA.timestamp.toMillis() - dataB.timestamp.toMillis();
+                        });
+                        const docToDeleteRef = sortedDocs[0].ref;
+                        await deleteDoc(docToDeleteRef);
+                    }
+                });
+
+                clearQueueBtn.addEventListener('click', async () => {
+                    const querySnapshot = await getDocs(queueCollectionRef);
+                    const batch = writeBatch(db);
+                    querySnapshot.docs.forEach((doc) => batch.delete(doc.ref));
+                    await batch.commit();
+                });
+            }
             
             const tabButtons = document.querySelectorAll('.tab-button[data-tab]');
             const tabContents = document.querySelectorAll('.tab-content');
@@ -547,124 +703,6 @@
             document.querySelectorAll('.tab-button[data-tab]').forEach(button => {
                 button.addEventListener('click', stopTtsSpeech);
             });
-
-            async function main() {
-                try {
-                    await signInAnonymously(auth);
-                    userId = auth.currentUser?.uid;
-                    setupQueueListeners();
-                } catch (error) {
-                    console.error("Authentication failed:", error);
-                    queueDisplay.innerHTML = `<p class="text-center text-red-500">Could not connect to the queue service. Please check your Firebase configuration and refresh the page.</p>`;
-                }
-            }
-
-            function setupQueueListeners() {
-                joinQueueBtn.addEventListener('click', async () => {
-                    const userName = userNameInput.value.trim();
-                    const questionCount = parseInt(questionCountInput.value, 10);
-                    if (userName && questionCount > 0) {
-                        await addDoc(queueCollectionRef, {
-                            name: userName,
-                            questions: questionCount,
-                            timestamp: new Date(),
-                            userId: userId
-                        });
-                        userNameInput.value = '';
-                        questionCountInput.value = '1';
-                    }
-                });
-
-                const q = query(queueCollectionRef);
-                onSnapshot(q, (snapshot) => {
-                    if (snapshot.empty) {
-                        queueDisplay.innerHTML = '<p class="text-center text-slate-500">The queue is currently empty.</p>';
-                        document.getElementById('join-queue-section').classList.remove('hidden');
-                        userQueueInfo.classList.add('hidden');
-                        return;
-                    }
-
-                    const sortedDocs = [...snapshot.docs].sort((a, b) => {
-                        const dataA = a.data();
-                        const dataB = b.data();
-                        const questionDiff = dataA.questions - dataB.questions;
-                        if (questionDiff !== 0) {
-                            return questionDiff;
-                        }
-                        return dataA.timestamp.toMillis() - dataB.timestamp.toMillis();
-                    });
-
-                    queueDisplay.innerHTML = '';
-                    let userInQueue = false;
-                    let userQueueNumber = 0;
-
-                    sortedDocs.forEach((doc, index) => {
-                        const person = doc.data();
-                        const queueNumber = index + 1;
-                        
-                        const element = document.createElement('div');
-                        element.className = `p-3 mb-2 rounded-lg flex justify-between items-center ${person.userId === userId ? 'bg-yellow-100 border-l-4 border-yellow-500' : 'bg-white shadow-sm'}`;
-                        element.innerHTML = `<div><span class="font-bold text-blue-800 text-lg">${queueNumber}. ${person.name}</span> <span class="text-sm text-slate-500">(${person.questions} question${person.questions > 1 ? 's' : ''})</span></div>`;
-                        queueDisplay.appendChild(element);
-
-                        if (person.userId === userId) {
-                            userInQueue = true;
-                            userQueueNumber = queueNumber;
-                        }
-                    });
-
-                    if (userInQueue) {
-                        const currentUserData = sortedDocs.find(doc => doc.data().userId === userId)?.data();
-                        if (currentUserData) {
-                             userQueueMessage.textContent = `Welcome, ${currentUserData.name}! You are number ${userQueueNumber} in the queue.`;
-                             userQueueInfo.classList.remove('hidden');
-                             document.getElementById('join-queue-section').classList.add('hidden');
-                        }
-                    } else {
-                         userQueueInfo.classList.add('hidden');
-                         document.getElementById('join-queue-section').classList.remove('hidden');
-                    }
-                });
-
-                showAdminLoginBtn.addEventListener('click', () => {
-                    adminLoginForm.classList.toggle('hidden');
-                });
-
-                adminLoginBtn.addEventListener('click', () => {
-                    if (adminPasswordInput.value === ADMIN_PASSWORD) {
-                        adminLoginForm.classList.add('hidden');
-                        adminControls.classList.remove('hidden');
-                        showAdminLoginBtn.classList.add('hidden');
-                    } else {
-                        alert('Incorrect password.');
-                    }
-                    adminPasswordInput.value = '';
-                });
-
-                nextPersonBtn.addEventListener('click', async () => {
-                    const querySnapshot = await getDocs(queueCollectionRef);
-                    if (!querySnapshot.empty) {
-                         const sortedDocs = [...querySnapshot.docs].sort((a, b) => {
-                            const dataA = a.data();
-                            const dataB = b.data();
-                            const questionDiff = dataA.questions - dataB.questions;
-                            if (questionDiff !== 0) {
-                                return questionDiff;
-                            }
-                            return dataA.timestamp.toMillis() - dataB.timestamp.toMillis();
-                        });
-                        const docToDeleteRef = sortedDocs[0].ref;
-                        await deleteDoc(docToDeleteRef);
-                    }
-                });
-
-                clearQueueBtn.addEventListener('click', async () => {
-                    const querySnapshot = await getDocs(queueCollectionRef);
-                    const batch = writeBatch(db);
-                    querySnapshot.docs.forEach((doc) => batch.delete(doc.ref));
-                    await batch.commit();
-                });
-            }
 
             main();
         });
