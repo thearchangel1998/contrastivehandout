@@ -134,10 +134,6 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
                         Limitations
                     </button>
-                     <button data-tab="qna" class="tab-button w-full p-3 text-base font-semibold flex items-center justify-start gap-3 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                        Q&A Queue
-                    </button>
                     <a href="https://thearchangel1998.github.io/wrapupgame/" target="_blank" rel="noopener noreferrer" class="tab-button w-full p-3 text-base font-semibold flex items-center justify-start gap-3 rounded-lg">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><path d="M17.5 15a2.5 2.5 0 0 0 0-5h-3a2.5 2.5 0 0 0 0 5h3Z"/><path d="M3 16V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>
                         Minigame
@@ -145,6 +141,10 @@
                      <button data-tab="presenters" class="tab-button w-full p-3 text-base font-semibold flex items-center justify-start gap-3 rounded-lg">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                         Presenters
+                    </button>
+                    <button data-tab="qna" class="tab-button w-full p-3 text-base font-semibold flex items-center justify-start gap-3 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        Q&A Queue
                     </button>
                 </div>
             </nav>
@@ -356,11 +356,19 @@
                             <div id="user-queue-info" class="hidden mt-6 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-r-lg">
                                 <p id="user-queue-message"></p>
                             </div>
-                            <div id="admin-controls" class="hidden mt-6">
-                                 <h3 class="text-xl font-semibold mb-4">Admin Controls</h3>
-                                <div class="flex space-x-2">
-                                     <button id="nextPersonBtn" class="bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition duration-300">Next Person</button>
-                                     <button id="clearQueueBtn" class="bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Clear Queue</button>
+                            <div class="mt-6">
+                                <button id="showAdminLoginBtn" class="text-sm text-slate-500 hover:text-red-600">Admin Login</button>
+                                <div id="admin-login-form" class="hidden mt-2 p-4 bg-slate-100 rounded-lg">
+                                    <label for="adminPassword" class="block text-sm font-medium text-gray-700">Admin Code</label>
+                                    <input type="password" id="adminPassword" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm" maxlength="6">
+                                    <button id="adminLoginBtn" class="mt-2 w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Login</button>
+                                </div>
+                                <div id="admin-controls" class="hidden mt-4">
+                                     <h3 class="text-xl font-semibold mb-4">Admin Controls</h3>
+                                    <div class="flex space-x-2">
+                                         <button id="nextPersonBtn" class="bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition duration-300">Next Person</button>
+                                         <button id="clearQueueBtn" class="bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Clear Queue</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -398,10 +406,10 @@
 
         // --- Firebase Configuration and Initialization ---
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const appId = typeof __app_id !== 'undefined' ? 'DoTuanNam2809' : 'default-app-id';
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'DoTuanNam2809';
         
-        // IMPORTANT: Replace this with your actual User ID from the console log to enable admin controls.
-        const ADMIN_USER_ID = "DoTuanNam2809";
+        // IMPORTANT: Replace "200518" with your own secret 6-digit code.
+        const ADMIN_PASSWORD = "200518";
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
@@ -421,6 +429,10 @@
         const nextPersonBtn = document.getElementById('nextPersonBtn');
         const clearQueueBtn = document.getElementById('clearQueueBtn');
         const adminControls = document.getElementById('admin-controls');
+        const showAdminLoginBtn = document.getElementById('showAdminLoginBtn');
+        const adminLoginForm = document.getElementById('admin-login-form');
+        const adminPasswordInput = document.getElementById('adminPassword');
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
 
         // --- Authentication and Main Logic ---
         async function main() {
@@ -431,15 +443,6 @@
                     await signInAnonymously(auth);
                 }
                 userId = auth.currentUser?.uid;
-                
-                // Log the user ID to the console for the admin to find.
-                console.log("Your User ID is:", userId);
-
-                // Show admin controls only if the current user is the admin.
-                if (userId === ADMIN_USER_ID) {
-                    adminControls.classList.remove('hidden');
-                }
-
                 setupQueueListeners();
             } catch (error) {
                 console.error("Authentication failed:", error);
@@ -512,6 +515,21 @@
                      userQueueInfo.classList.add('hidden');
                      document.getElementById('join-queue-section').classList.remove('hidden');
                 }
+            });
+
+            showAdminLoginBtn.addEventListener('click', () => {
+                adminLoginForm.classList.toggle('hidden');
+            });
+
+            adminLoginBtn.addEventListener('click', () => {
+                if (adminPasswordInput.value === ADMIN_PASSWORD) {
+                    adminLoginForm.classList.add('hidden');
+                    adminControls.classList.remove('hidden');
+                    showAdminLoginBtn.classList.add('hidden');
+                } else {
+                    alert('Incorrect password.');
+                }
+                adminPasswordInput.value = '';
             });
 
             nextPersonBtn.addEventListener('click', async () => {
