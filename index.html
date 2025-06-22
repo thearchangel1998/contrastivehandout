@@ -404,31 +404,27 @@
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, getDocs, writeBatch, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', () => {
             // --- Firebase Configuration and Initialization ---
             const firebaseConfig = {
                 apiKey: "AIzaSyAaqhVYn0AAt8dbHhfwtO6GDSzuFuHjPE0",
                 authDomain: "presentations-3ae0e.firebaseapp.com",
                 projectId: "presentations-3ae0e",
-                storageBucket: "presentations-3ae0e.firebasestorage.app",
+                storageBucket: "presentations-3ae0e.appspot.com",
                 messagingSenderId: "402435542082",
                 appId: "1:402435542082:web:2d1205f34e893fe218b1db",
                 measurementId: "G-3SW6NWPV0E"
             };
             
             const appId = 'DoTuanNam2809';
-            
             const ADMIN_PASSWORD = "200518";
 
-            // Initialize Firebase
             const app = initializeApp(firebaseConfig);
             const auth = getAuth(app);
             const db = getFirestore(app);
             let userId;
-
             const queueCollectionRef = collection(db, `artifacts/${appId}/public/data/queue`);
 
-            // --- DOM Elements ---
             const joinQueueBtn = document.getElementById('joinQueueBtn');
             const userNameInput = document.getElementById('userName');
             const questionCountInput = document.getElementById('questionCount');
@@ -442,8 +438,117 @@
             const adminLoginForm = document.getElementById('admin-login-form');
             const adminPasswordInput = document.getElementById('adminPassword');
             const adminLoginBtn = document.getElementById('adminLoginBtn');
+            
+            const tabButtons = document.querySelectorAll('.tab-button[data-tab]');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    button.classList.add('active');
+                    const tabId = button.dataset.tab;
+                    document.getElementById(tabId)?.classList.add('active');
+                });
+            });
+            
+            const clickableLines = document.querySelectorAll('.clickable-line');
+            clickableLines.forEach(line => {
+                line.addEventListener('click', function () {
+                    this.classList.toggle('active');
+                    this.parentElement.nextElementSibling.classList.toggle('show');
+                });
+            });
 
-            // --- Authentication and Main Logic ---
+            const ttsSynthesis = window.speechSynthesis;
+            let ttsVoices = [];
+            let ttsCurrentUtterance = null;
+            let ttsSpeakingButton = null;
+
+            function populateTtsVoiceList() {
+                ttsVoices = ttsSynthesis.getVoices();
+                if (ttsVoices.length > 0) {
+                    document.querySelectorAll('.tts-button').forEach(button => button.disabled = false);
+                }
+            }
+            
+            document.querySelectorAll('.tts-button').forEach(button => button.disabled = true);
+            populateTtsVoiceList();
+            if (ttsSynthesis.onvoiceschanged !== undefined) {
+                ttsSynthesis.onvoiceschanged = populateTtsVoiceList;
+            }
+
+            function findBestBritishVoice(gender) {
+                if (!ttsVoices || ttsVoices.length === 0) return null;
+                const genderLC = gender.toLowerCase();
+                const criteria = [
+                    v => v.lang === 'en-GB' && v.name.toLowerCase().includes(genderLC),
+                    v => v.lang === 'en-GB' && (genderLC === 'female' ? v.name.includes('Female') : v.name.includes('Male')),
+                    v => v.lang === 'en-GB',
+                    v => v.name.toLowerCase().includes('british') && v.name.toLowerCase().includes(genderLC),
+                    v => v.name.toLowerCase().includes('british'),
+                    v => genderLC === 'female' && v.name === 'Google UK English Female',
+                    v => genderLC === 'male' && v.name === 'Google UK English Male',
+                ];
+                for (const criterion of criteria) {
+                    const foundVoices = ttsVoices.filter(criterion);
+                    if (foundVoices.length > 0) {
+                        const nonLocal = foundVoices.filter(v => !v.localService);
+                        return nonLocal.length > 0 ? nonLocal[0] : foundVoices[0];
+                    }
+                }
+                return null;
+            }
+
+            function stopTtsSpeech() {
+                if(ttsSynthesis.speaking) ttsSynthesis.cancel();
+                if (ttsSpeakingButton) {
+                    ttsSpeakingButton.classList.remove('is-speaking');
+                    ttsSpeakingButton = null;
+                }
+                ttsCurrentUtterance = null;
+            }
+
+            document.querySelectorAll('.tts-button').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    const textToSpeak = this.dataset.text;
+                    const genderAttr = this.dataset.gender;
+                    if (ttsSpeakingButton === this) {
+                        stopTtsSpeech();
+                        return;
+                    }
+                    stopTtsSpeech();
+                    setTimeout(() => {
+                        ttsCurrentUtterance = new SpeechSynthesisUtterance(textToSpeak);
+                        let selectedVoice = findBestBritishVoice(genderAttr);
+                        if (selectedVoice) {
+                            ttsCurrentUtterance.voice = selectedVoice;
+                        } else {
+                            ttsCurrentUtterance.lang = 'en-GB';
+                        }
+                        ttsSpeakingButton = button;
+                        button.classList.add('is-speaking');
+                        ttsCurrentUtterance.onend = () => {
+                            if (ttsSpeakingButton) ttsSpeakingButton.classList.remove('is-speaking');
+                            ttsSpeakingButton = null;
+                            ttsCurrentUtterance = null;
+                        };
+                        ttsCurrentUtterance.onerror = (e) => {
+                            console.error('Speech synthesis error:', e);
+                            if (ttsSpeakingButton) ttsSpeakingButton.classList.remove('is-speaking');
+                            ttsSpeakingButton = null;
+                            ttsCurrentUtterance = null;
+                        }
+                        ttsSynthesis.speak(ttsCurrentUtterance);
+                    }, 100);
+                });
+            });
+
+            document.querySelectorAll('.tab-button[data-tab]').forEach(button => {
+                button.addEventListener('click', stopTtsSpeech);
+            });
+
             async function main() {
                 try {
                     await signInAnonymously(auth);
@@ -561,117 +666,6 @@
                     await batch.commit();
                 });
             }
-            
-            // --- Standard Page Script ---
-            const tabButtons = document.querySelectorAll('.tab-button[data-tab]');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    button.classList.add('active');
-                    const tabId = button.dataset.tab;
-                    document.getElementById(tabId)?.classList.add('active');
-                });
-            });
-            
-            const clickableLines = document.querySelectorAll('.clickable-line');
-            clickableLines.forEach(line => {
-                line.addEventListener('click', function () {
-                    this.classList.toggle('active');
-                    this.parentElement.nextElementSibling.classList.toggle('show');
-                });
-            });
-
-            const ttsSynthesis = window.speechSynthesis;
-            let ttsVoices = [];
-            let ttsCurrentUtterance = null;
-            let ttsSpeakingButton = null;
-
-            function populateTtsVoiceList() {
-                ttsVoices = ttsSynthesis.getVoices();
-                if (ttsVoices.length > 0) {
-                    document.querySelectorAll('.tts-button').forEach(button => button.disabled = false);
-                }
-            }
-            
-            document.querySelectorAll('.tts-button').forEach(button => button.disabled = true);
-            populateTtsVoiceList();
-            if (ttsSynthesis.onvoiceschanged !== undefined) {
-                ttsSynthesis.onvoiceschanged = populateTtsVoiceList;
-            }
-
-            function findBestBritishVoice(gender) {
-                if (!ttsVoices || ttsVoices.length === 0) return null;
-                const genderLC = gender.toLowerCase();
-                const criteria = [
-                    v => v.lang === 'en-GB' && v.name.toLowerCase().includes(genderLC),
-                    v => v.lang === 'en-GB' && (genderLC === 'female' ? v.name.includes('Female') : v.name.includes('Male')),
-                    v => v.lang === 'en-GB',
-                    v => v.name.toLowerCase().includes('british') && v.name.toLowerCase().includes(genderLC),
-                    v => v.name.toLowerCase().includes('british'),
-                    v => genderLC === 'female' && v.name === 'Google UK English Female',
-                    v => genderLC === 'male' && v.name === 'Google UK English Male',
-                ];
-                for (const criterion of criteria) {
-                    const foundVoices = ttsVoices.filter(criterion);
-                    if (foundVoices.length > 0) {
-                        const nonLocal = foundVoices.filter(v => !v.localService);
-                        return nonLocal.length > 0 ? nonLocal[0] : foundVoices[0];
-                    }
-                }
-                return null;
-            }
-
-            function stopTtsSpeech() {
-                if(ttsSynthesis.speaking) ttsSynthesis.cancel();
-                if (ttsSpeakingButton) {
-                    ttsSpeakingButton.classList.remove('is-speaking');
-                    ttsSpeakingButton = null;
-                }
-                ttsCurrentUtterance = null;
-            }
-
-            document.querySelectorAll('.tts-button').forEach(button => {
-                button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    const textToSpeak = this.dataset.text;
-                    const genderAttr = this.dataset.gender;
-                    if (ttsSpeakingButton === this) {
-                        stopTtsSpeech();
-                        return;
-                    }
-                    stopTtsSpeech();
-                    setTimeout(() => {
-                        ttsCurrentUtterance = new SpeechSynthesisUtterance(textToSpeak);
-                        let selectedVoice = findBestBritishVoice(genderAttr);
-                        if (selectedVoice) {
-                            ttsCurrentUtterance.voice = selectedVoice;
-                        } else {
-                            ttsCurrentUtterance.lang = 'en-GB';
-                        }
-                        ttsSpeakingButton = button;
-                        button.classList.add('is-speaking');
-                        ttsCurrentUtterance.onend = () => {
-                            if (ttsSpeakingButton) ttsSpeakingButton.classList.remove('is-speaking');
-                            ttsSpeakingButton = null;
-                            ttsCurrentUtterance = null;
-                        };
-                        ttsCurrentUtterance.onerror = (e) => {
-                            console.error('Speech synthesis error:', e);
-                            if (ttsSpeakingButton) ttsSpeakingButton.classList.remove('is-speaking');
-                            ttsSpeakingButton = null;
-                            ttsCurrentUtterance = null;
-                        }
-                        ttsSynthesis.speak(ttsCurrentUtterance);
-                    }, 100);
-                });
-            });
-
-            document.querySelectorAll('.tab-button[data-tab]').forEach(button => {
-                button.addEventListener('click', stopTtsSpeech);
-            });
 
             main();
         });
